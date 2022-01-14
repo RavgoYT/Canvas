@@ -42,8 +42,8 @@ function setup() {
 function draw() {
   noStroke()
   
-  if (frameCount * 5 <= points.length) {
-    var max = frameCount * 5
+  if (frameCount * 10 <= points.length) {
+    var max = frameCount * 10
   } else {
     var max = points.length
   }
@@ -53,7 +53,7 @@ function draw() {
     var r = map(points[i].x, 0, width, r1, r2)
     var g = map(points[i].y, 0, height, g1, g2)
     var b = map(points[i].x, 0, width, b1, b2)
-    var alpha = map(dist(width / 2, height / 2, points[i].x, points[i].y), 0, 280, 220, 0)
+    var alpha = map(dist(width / 2, height / 2, points[i].x, points[i].y), 0, 350, 1000, 0)
     
     fill(r, g, b, alpha)
     
@@ -61,7 +61,7 @@ function draw() {
     
     points[i].add(createVector(cos(angle), sin(angle)))
     
-    if (dist(width / 2, height / 2, points[i].x, points[i].y) < 300){
+    if (dist(width / 2, height / 2, points[i].x, points[i].y) < 380){
           ellipse(points[i].x, points[i].y, 1)
     }
 
