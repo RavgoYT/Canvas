@@ -1,5 +1,5 @@
 var points = []
-var mult = 0.005
+var mult = 0.01
 
 var r1
 var r2
@@ -14,7 +14,7 @@ function setup() {
   angleMode(DEGREES)
   noiseDetail(1)
   
-  var density = 500
+  var density = 1000
   var space = width / density
   
   for (var x = 0; x < width; x += space) {
@@ -34,7 +34,7 @@ function setup() {
   b1 = random(255)
   b2 = random(255)
   
-  mult = random(0.002, 0.01)
+  mult = random(0.002, 0.05)
   
 }
 
@@ -55,7 +55,7 @@ function draw() {
     var b = map(points[i].x, 0, width, b1, b2)
     var alpha = map(dist(width / 2, height / 2, points[i].x, points[i].y), 0, 500, 1000, 0)
     
-    fill(r, g, b, alpha)
+    fill(r, g, b)
     
     var angle = map(noise(points[i].x * mult, points[i].y * mult), 0, 1, 0, 720)
     
