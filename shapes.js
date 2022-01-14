@@ -25,6 +25,8 @@ function setup() {
     }
   }
   
+  shuffle(points, true)
+  
   r1 = random(255)
   r2 = random(255)
   g1 = random(255)
@@ -40,13 +42,18 @@ function setup() {
 function draw() {
   noStroke()
   
+  if (frameCount * 5 <= points.length) {
+    var max = frameCount * 5
+  } else {
+    var max = points.length
+  }
   
-  for (var i = 0; i < points.length; i++) {
+  for (var i = 0; i < max; i++) {
     
     var r = map(points[i].x, 0, width, r1, r2)
     var g = map(points[i].y, 0, height, g1, g2)
     var b = map(points[i].x, 0, width, b1, b2)
-    var alpha = map(dist(width / 2, height / 2, points[i].x, points[i].y), 0, 350, 400, 0)
+    var alpha = map(dist(width / 2, height / 2, points[i].x, points[i].y), 0, 280, 220, 0)
     
     fill(r, g, b, alpha)
     
@@ -54,13 +61,13 @@ function draw() {
     
     points[i].add(createVector(cos(angle), sin(angle)))
     
-    if (dist(width / 2, height / 2, points[i].x, points[i].y) < 350){
+    if (dist(width / 2, height / 2, points[i].x, points[i].y) < 300){
           ellipse(points[i].x, points[i].y, 1)
     }
 
   }
   
-function mouseClicked() {
+function mouseIsPressed() {
   saveCanvas('flowfield', 'png')
 }
   
