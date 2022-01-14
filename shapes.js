@@ -14,7 +14,7 @@ function setup() {
   angleMode(DEGREES)
   noiseDetail(1)
   
-  var density = 30
+  var density = 500
   var space = width / density
   
   for (var x = 0; x < width; x += space) {
@@ -61,9 +61,9 @@ function draw() {
     
     points[i].add(createVector(cos(angle), sin(angle)))
     
-    if (dist(width / 2, height / 2, points[i].x, points[i].y) < 500){
+
           ellipse(points[i].x, points[i].y, 1)
-    }
+    
 
   }
   
