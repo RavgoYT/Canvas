@@ -50,7 +50,7 @@ function draw() {
     
     fill(r, g, b, alpha)
     
-    var angle = map(noise(points[i].x * mult, points[i].y) * mult, 0, 1, 0, 720)
+    var angle = map(noise(points[i].x * mult, points[i].y * mult), 0, 1, 0, 720)
     
     points[i].add(createVector(cos(angle), sin(angle)))
     
