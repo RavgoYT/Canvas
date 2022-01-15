@@ -1,5 +1,5 @@
 var points = []
-var mult = 0.01
+var mult = 0.005
 
 var r1
 var r2
@@ -8,13 +8,16 @@ var g2
 var b1
 var b2
 
+
+
 function setup() {
+
   createCanvas(windowWidth, windowHeight);
   background(30)
   angleMode(DEGREES)
   noiseDetail(1)
   
-  var density = 200
+  var density = 50
   var space = width / density
   
   for (var x = 0; x < width; x += space) {
@@ -34,7 +37,7 @@ function setup() {
   b1 = random(255)
   b2 = random(255)
   
-  mult = random(0.002, 0.05)
+ // mult = random(0.002, 0.05)
   
 }
 
@@ -42,8 +45,8 @@ function setup() {
 function draw() {
   noStroke()
   
-  if (frameCount * 10 <= points.length) {
-    var max = frameCount * 10
+  if (frameCount * 30 <= points.length) {
+    var max = frameCount * 30
   } else {
     var max = points.length
   }
@@ -53,16 +56,18 @@ function draw() {
     var r = map(points[i].x, 0, width, r1, r2)
     var g = map(points[i].y, 0, height, g1, g2)
     var b = map(points[i].x, 0, width, b1, b2)
-    var alpha = map(dist(width / 2, height / 2, points[i].x, points[i].y), 0, 500, 1000, 0)
+    var alpha = map(dist(width / 2, height / 2, points[i].x, points[i].y), 0, 350, 400, 0)
     
-    fill(r, g, b)
+    fill(r, g, b, alpha)
     
     var angle = map(noise(points[i].x * mult, points[i].y * mult), 0, 1, 0, 720)
     
     points[i].add(createVector(cos(angle), sin(angle)))
     
+        if (dist(width / 2, height / 2, points[i].x, points[i].y) < 350) {
+                    ellipse(points[i].x, points[i].y, 1)
+        }
 
-          ellipse(points[i].x, points[i].y, 1)
     
 
   }
@@ -70,6 +75,14 @@ function draw() {
 function mouseIsPressed() {
   saveCanvas('flowfield', 'png')
 }
-  
+ 
+
   
 }
+
+function restart() {
+  clear()
+  redraw()
+}
+
+setInterval(restart, 20000);
