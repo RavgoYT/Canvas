@@ -1,4 +1,17 @@
-var points = []
+function setup() {
+  createCanvas(windowWidth + 10, windowHeight + 10);
+}
+
+function draw() {
+  strokeWeight(10);
+  stroke(255, 0, 0);
+  noFill();
+  rect(5, 5, windowWidth, windowHeight);
+}
+
+
+
+/* var points = []
 var mult = 0.005
 
 var r1
@@ -85,4 +98,4 @@ function restart() {
   redraw()
 }
 
-setInterval(restart, 20000);
+setInterval(restart, 20000); */
