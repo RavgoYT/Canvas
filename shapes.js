@@ -6,7 +6,7 @@ function draw() {
   strokeWeight(10);
   stroke(255, 0, 0);
   noFill();
-  rect(5, 5, windowWidth - 5, windowHeight - 5);
+  rect(5, 5, windowWidth - 15, windowHeight - 15);
 }
 
 
