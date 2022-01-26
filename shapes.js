@@ -1,13 +1,13 @@
 function setup() {
-  createCanvas(1200, 600);
+  createCanvas(windowWidth, windowHeight);
 }
 
-function draw() {
-  strokeWeight(10);
-  stroke(255, 0, 0);
-  noFill();
-  rect(5, 5, windowWidth - 30, windowHeight - 30);
-}
+  function draw() {
+//   strokeWeight(10);
+//   stroke(255, 0, 0);
+//   noFill();
+//   rect(5, 5, windowWidth - 30, windowHeight - 30);
+ }
 
 
 
