@@ -1,12 +1,12 @@
 function setup() {
-  createCanvas(windowWidth, windowHeight);
+  createCanvas(1000, 1000);
 }
 
 function draw() {
   strokeWeight(20);
   stroke(255, 0, 0);
   noFill();
-  rect(0, 0, 400, 400);
+  rect(0, 0, 1000, 600);
 }
 
 
