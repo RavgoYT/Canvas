@@ -3,7 +3,8 @@ function setup() {
 }
 
 function draw() {
-  strokeWeight(20);
+  background(51);
+  strokeWeight(10);
   stroke(255, 0, 0);
   noFill();
   rect(0, 0, 1000, 600);
