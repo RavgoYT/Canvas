@@ -1,3 +1,5 @@
+
+/*
 function setup() {
   createCanvas(windowWidth - 20, windowHeight -20);
 }
@@ -9,10 +11,10 @@ function draw() {
   noFill();
   rect(windowWidth/2, windowHeight/2, 50, 50);
 }
+*/
 
 
-
-/* var points = []
+var points = []
 var mult = 0.005
 
 var r1
@@ -99,4 +101,4 @@ function restart() {
   redraw()
 }
 
-setInterval(restart, 20000); */
+setInterval(restart, 20000);
