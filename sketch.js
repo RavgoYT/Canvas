@@ -1,5 +1,5 @@
-var inc = 0.01;
-var scl = 10;
+var inc = .08;
+var scl = 50;
 var cols, rows;
 
 var zoff = 0;
@@ -26,7 +26,7 @@ var yellow_data = 1000;
 
 setInterval(function() {
     ChangeLines();
-}, 5000);
+}, 1000);
 
 function dataRequest(){
     socket.emit('datarequest', {data: "request"});
@@ -44,11 +44,8 @@ function ChangeLines(){
 }
 
 function setup() {
-  slider = createSlider(0.01, 0.1, 0.02,0);
-  slider.position(10, 10);
-  slider.style('width', '80px');
   ChangeLines();
-  createCanvas(windowWidth-15, windowHeight-20);
+  createCanvas(windowWidth, windowHeight);
   cols = floor(width / scl);
   rows = floor(height / scl);
   fr = createP('');
@@ -64,12 +61,46 @@ function setup() {
     particlesBlue[i] = new Particle();
     particlesYellow[i] = new Particle();
   }
-  background(255);
+  background(255);  
+}
+
+function createFlowField(cols, rows, inc) {
+  let flowfield = new Array(cols * rows);
+  let yoff = 0;
+
+  for (let y = 0; y < rows; y++) {
+    let xoff = 0;
+    for (let x = 0; x < cols; x++) {
+      let index = x + y * cols;
+      let angle = perlinNoise(xoff, yoff, zoff) * TWO_PI * 1.2;
+
+      let v = createVector(cos(angle), sin(angle));
+      v.mult(5); // Adjust magnitude as needed
+
+      flowfield[index] = v;
+
+      xoff += inc;
+    }
+    yoff += inc;
+  }
+
+  zoff += 0.003;
+
+  return flowfield;
+}
+
+function draw() {
+  // Use createFlowField function for each flow field
+  flowfield = createFlowField(cols, rows, inc);
+
+  fr.html(floor(frameRate()));
+
+  // Rest of your draw logic...
 }
 
 
-function draw() {
-  
+function doTheThing(){
+
   let val = slider.value();
   inc = val;
 
@@ -79,56 +110,31 @@ function draw() {
     for (var x = 0; x < cols; x++) {
       var index = x + y * cols;
       var angle = noise(xoff, yoff, zoff) * TWO_PI;
-      var angleMaroon = noise(xoff, yoff, zoff) * TWO_PI;
-      var angleBlue = noise(xoff, yoff, zoff) * TWO_PI;
-      var angleYellow = noise(xoff, yoff, zoff) * TWO_PI;
 
       var v = p5.Vector.fromAngle(angle);
-      var vm = p5.Vector.fromAngle(angleMaroon);
-      var vb = p5.Vector.fromAngle(angleBlue);
-      var vy = p5.Vector.fromAngle(angleYellow);
-
       v.setMag(5);
-      vm.setMag(5);
-      vb.setMag(5);
-      vy.setMag(5);
 
       flowfield[index] = v;
-      flowfieldMaroon[index] = vm;
-      flowfieldBlue[index] = vb;
-      flowfieldYellow[index] = vy;
+
       xoff += inc;
-     
     }
     yoff += inc;
-
-    
   }
-  zoff += 0.0003;
-  for (var i = 0; i < particles.length; i++) {
-   
-    if(gamma_is_high==true){
-        particlesMaroon[i].follow(flowfieldMaroon);
-        particlesMaroon[i].update();
-        particlesMaroon[i].edges();
-        particlesMaroon[i].showMaroon();
-    }
-    
 
-    if(beta_is_high){
-        particlesBlue[i].follow(flowfieldBlue);
-        particlesBlue[i].update();
-        particlesBlue[i].edges();
-        particlesBlue[i].showBlue();
+  zoff += 0.0003;
+
+  for (var gx = 0; gx < gridSize; gx++) {
+    for (var gy = 0; gy < gridSize; gy++) {
+      var offsetX = gx * gridSpacingX;
+      var offsetY = gy * gridSpacingY;
+
+      for (var i = 0; i < particles.length; i++) {
+        particles[i].follow(flowfield);
+        particles[i].update();
+        particles[i].edges();
+        particles[i].show(offsetX, offsetY);
+      }
     }
-   
-    if(alpha_is_high){
-        particlesYellow[i].follow(flowfieldYellow);
-        particlesYellow[i].update();
-        particlesYellow[i].edges();
-        particlesYellow[i].showYellow();
-    }
-    
   }
 
   fr.html(floor(frameRate()));
